@@ -17,6 +17,17 @@
 		<url-pattern>/MonitorServiceServlet</url-pattern>
 	</servlet-mapping>
 
+<servlet>
+		<servlet-name>WeatherStatusServiceServlet</servlet-name>
+		<servlet-class>servlet.WeatherStatusServiceServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>WeatherStatusServiceServlet</servlet-name>
+		<url-pattern>/WeatherStatusServiceServlet</url-pattern>
+	</servlet-mapping>
+	
+	
 </web-app>
 
 
