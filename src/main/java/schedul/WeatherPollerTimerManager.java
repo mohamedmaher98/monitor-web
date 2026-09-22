@@ -1,5 +1,7 @@
 package schedul;
 
+import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -7,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.plaf.FontUIResource;
 
+import uitl.AppConfigUtil;
 import util.JDBCConnectionUtil;
 
 public class WeatherPollerTimerManager {
@@ -14,9 +17,9 @@ public class WeatherPollerTimerManager {
 	private static ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 	private static ScheduledFuture<?> future;
 
-	public static void start() {
+	public static void start(PrintWriter writer) throws NumberFormatException, SQLException {
 		if (isDone()) {
-			future = executor.scheduleWithFixedDelay(new ScheduledWeatherPoll(), 0, 30, TimeUnit.SECONDS);
+			AppConfigUtil.handlePollerTimeFromDB( JDBCConnectionUtil.getIntervalPoll(), writer);
 		}
 
 	}
@@ -32,7 +35,7 @@ public class WeatherPollerTimerManager {
 	public static void shutDown() {
 		executor.shutdown();
 	}
-	
+
 	public static boolean isRunning() {
 		return !isDone();
 	}

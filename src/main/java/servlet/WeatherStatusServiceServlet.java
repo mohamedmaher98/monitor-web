@@ -2,7 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.concurrent.TimeUnit;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import schedul.WeatherPollerTimerManager;
+import uitl.AppConfigUtil;
 
 public class WeatherStatusServiceServlet extends HttpServlet {
 
@@ -41,8 +42,18 @@ public class WeatherStatusServiceServlet extends HttpServlet {
 			if (WeatherPollerTimerManager.isRunning()) {
 				writer.print("the service is already running");
 			} else {
-				WeatherPollerTimerManager.start();
-				writer.print("the service started successfully");
+				try {
+					WeatherPollerTimerManager.start(writer);
+				} catch (NumberFormatException e) {
+					System.out.println(e.getMessage());
+					writer.print("invlaed input");
+					e.printStackTrace();
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
+					writer.print("Data Base Error");
+					e.printStackTrace();
+				}
+
 			}
 		} else if ("isRunning".equals(action))
 
@@ -53,22 +64,8 @@ public class WeatherStatusServiceServlet extends HttpServlet {
 			else
 				writer.print("the service is not running");
 		} else if ("setTime".equals(action)) {
-			int seconds = 0;
-			boolean flag = true;
-			try {
-				seconds = Integer.valueOf(request.getParameter("seconds"));
-			} catch (Exception e) {
-				writer.print("Invalid Input For Seconds");
-				flag = false;
-			}
-			if (seconds < 30 && flag) {
-				writer.print("Seconds Cannot be less than 30 sec");
-				flag = false;
-			}
-			if (flag) {
-				WeatherPollerTimerManager.start(seconds);
-				writer.print("the service started successfully");
-			}
+			String sec = request.getParameter("seconds");
+			AppConfigUtil.handlePollerTimeFromUrl(sec, writer);
 		} else {
 			writer.print("not valid param");
 		}
