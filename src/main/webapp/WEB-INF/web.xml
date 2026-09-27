@@ -27,7 +27,15 @@
 		<url-pattern>/WeatherStatusServiceServlet</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+	<servlet-name>TempViewPageServlet</servlet-name>
+	<servlet-class>servlet.TempViewPageServlet</servlet-class>
+	</servlet>
 	
+	<servlet-mapping>
+	<servlet-name>TempViewPageServlet</servlet-name>
+	<url-pattern>/viewPage</url-pattern>
+	</servlet-mapping>
 </web-app>
 
 

@@ -7,8 +7,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import javax.swing.plaf.FontUIResource;
-
 import uitl.AppConfigUtil;
 import util.JDBCConnectionUtil;
 
@@ -48,4 +46,14 @@ public class WeatherPollerTimerManager {
 		stop();
 		future = executor.scheduleWithFixedDelay(new ScheduledWeatherPoll(), 0, time, TimeUnit.SECONDS);
 	}
+	
+	public static String  ServiceStatus()
+	{
+	    if(isRunning())
+	        return"Running";
+	    return "Stopped";
+	}
+    {
+        
+    }
 }
