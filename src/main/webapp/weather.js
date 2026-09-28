@@ -9,14 +9,12 @@ function loadData() {
                 document.getElementById("lastTemp").textContent = data.lastTemp;
                 document.getElementById("status").textContent = data.serviceStatus;
                 document.getElementById("status").style.fontSize = "30px";
-                if (data.serviceStatus == "Stopped") {
-
+                if (data.serviceStatus == "STOPPED")
                     document.getElementById("status").style.color = "red";
-                }
-                else {
-               
+                else if (data.serviceStatus == "RUNNING")
                     document.getElementById("status").style.color = "green";
-                }
+                else
+                    document.getElementById("status").style.color = "orange";
                 document.getElementById("failedAttempts").textContent = data.failedAttempts
                 document.getElementById("lastTime").textContent = data.lastTime
                 if (data.lastError != null)

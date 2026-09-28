@@ -31,7 +31,7 @@ public class AppConfigUtil {
 
 	}
 
-	public static void handlePollerTimeFromDB(String s, PrintWriter writer) {
+	public static void handlePollerTimeFromDB(String s) {
 		int seconds = 0;
 
 		try {
@@ -42,11 +42,9 @@ public class AppConfigUtil {
 
 			}
 			WeatherPollerTimerManager.start(seconds);
-			writer.print("the service started successfully");
 			LogUtil.log(LogLevel.INFO, "the service started successfully", AppConfigUtil.class);
 		} catch (Exception e) {
 			WeatherPollerTimerManager.start(30);
-			writer.print("the service started successfully");
 			LogUtil.log(LogLevel.ERROR, e.getMessage() + "the value from the db is: " + s
 					+ "the service is running now with deafult time poll ", AppConfigUtil.class);
 
