@@ -8,7 +8,7 @@ public class FillWeatherTablesTask implements Runnable{
 	   
           JDBCConnectionUtil util = new JDBCConnectionUtil();
           util.fillWeatherTables();
-          System.out.println("the tables created sucssfully");
+       
          
 	}
 
